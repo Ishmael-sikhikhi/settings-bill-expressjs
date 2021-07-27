@@ -1,11 +1,11 @@
 let express = require('express');
-const exphbs  = require('express-handlebars');
+const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser')
 const SettingsBill = require('./settings-bill')
 const handlebarSetup = exphbs({
     partialsDir: "./views/partials",
-    viewPath:  './views',
-    layoutsDir : './views/layouts'
+    viewPath: './views',
+    layoutsDir: './views/layouts'
 });
 
 let app = express();
@@ -21,14 +21,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.get('/', (req, res)=>{
-    res.render("index",{
+app.get('/', (req, res) => {
+    res.render("index", {
         settings: settingsBill.getSettings(),
         totals: settingsBill.totals()
     });
-})  
+})
 
-app.post('/settings', (req, res)=>{
+app.post('/settings', (req, res) => {
     console.log(req.body)
 
     settingsBill.setSettings({
@@ -37,26 +37,26 @@ app.post('/settings', (req, res)=>{
         warningLevel: req.body.warningLevel,
         criticalLevel: req.body.criticalLevel
     })
-    
+
     res.redirect('/')
 })
 
-app.post('/action', (req, res)=>{
+app.post('/action', (req, res) => {
     settingsBill.recordAction(req.body.actionType)
     res.redirect('/')
 })
 
-app.get('/actions', (req, res)=>{
-    res.render('actions', {actions: settingsBill.actions()})
+app.get('/actions', (req, res) => {
+    res.render('actions', { actions: settingsBill.actions() })
 })
 
-app.get('/actions/:actionType', (req, res)=>{
+app.get('/actions/:actionType', (req, res) => {
     const actionType = req.params.actionType
-    res.render('actions', {actions: settingsBill.actionsFor(actionType)})
+    res.render('actions', { actions: settingsBill.actionsFor(actionType) })
 })
 
 const PORT = process.env.PORT || 3011
 
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log('App started at port:', PORT)
 })
