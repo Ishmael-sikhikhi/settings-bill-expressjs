@@ -67,7 +67,7 @@ describe('settings-bill', function(){
 
     });
 
-    it('should know when warning level reached', function(){
+    it('should know when warning level reached and add colour for warning level', function(){
         const settingsBill = SettingsBill();
         settingsBill.setSettings({
             smsCost: 2.50,
@@ -80,9 +80,10 @@ describe('settings-bill', function(){
         settingsBill.recordAction('sms');
 
         assert.equal(true, settingsBill.hasReachedWarningLevel());
+        assert.equal('warning', settingsBill.totalClassName());
     });
 
-    it('should know when critical level reached', function(){
+    it('should know when critical level reached and add colour for critical level', function(){
         const settingsBill = SettingsBill();
         settingsBill.setSettings({
             smsCost: 2.50,
@@ -96,6 +97,6 @@ describe('settings-bill', function(){
         settingsBill.recordAction('sms');
 
         assert.equal(true, settingsBill.hasReachedCriticalLevel());
-
+        assert.equal('danger', settingsBill.totalClassName());
     });
 });
