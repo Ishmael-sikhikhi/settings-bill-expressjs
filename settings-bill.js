@@ -1,5 +1,7 @@
 module.exports = function SettingsBill() {
 
+    let moment = require('moment')
+
     let smsCost;
     let callCost;
     let warningLevel;
@@ -34,11 +36,12 @@ module.exports = function SettingsBill() {
             else if (action === 'call') {
                 cost = callCost;
             }
-            if (action === 'sms' || action === 'call') {
+            if (action === 'sms' || action === 'call' && action !== '') {
+                let now_ = new Date()
                 actionList.push({
                     type: action,
                     cost,
-                    timestamp: new Date()
+                    timestamp: moment(now_).fromNow()//new Date()
                 });
             }
         }
@@ -89,12 +92,12 @@ module.exports = function SettingsBill() {
     }
 
     function totals() {
-        let smsTotal = getTotal('sms')
-        let callTotal = getTotal('call')
+        let smsTotal = getTotal('sms').toFixed(2)
+        let callTotal = getTotal('call').toFixed(2)
         return {
             smsTotal,
             callTotal,
-            grandTotal: grandTotal()
+            grandTotal: grandTotal().toFixed(2)
         }
     }
 

@@ -99,4 +99,4 @@ describe('settings-bill', function(){
         assert.equal(true, settingsBill.hasReachedCriticalLevel());
         assert.equal('danger', settingsBill.totalClassName());
     });
-});
+});``
