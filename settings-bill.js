@@ -31,19 +31,13 @@ module.exports = function SettingsBill() {
 
         if (!hasReachedCriticalLevel()) {
             let cost = 0;
-            if (smsCost === null){
-                smsCost = 0
-            }
-            if (callCost ===null){
-                callCost = 0
-            }
             if (action === 'sms') {
                 cost = smsCost;
             }
             else if (action === 'call')  {
                 cost = callCost;
             }
-            if (action === 'sms' && cost >= 0 || action === 'call' && cost >= 0) {
+            if (action === 'sms' || action === 'call' && action !== '') {
                 let now_ = new Date()
                 actionList.push({
                     type: action,
