@@ -27,21 +27,28 @@ module.exports = function SettingsBill() {
     }
 
     function recordAction(action) {
+        
 
         if (!hasReachedCriticalLevel()) {
             let cost = 0;
+            if (smsCost === null){
+                smsCost = 0
+            }
+            if (callCost ===null){
+                callCost = 0
+            }
             if (action === 'sms') {
                 cost = smsCost;
             }
-            else if (action === 'call') {
+            else if (action === 'call')  {
                 cost = callCost;
             }
-            if (action === 'sms' || action === 'call' && action !== '') {
+            if (action === 'sms' && cost >= 0 || action === 'call' && cost >= 0) {
                 let now_ = new Date()
                 actionList.push({
                     type: action,
                     cost,
-                    timestamp: moment(now_).fromNow()//new Date()
+                    timestamp: moment(now_).fromNow()
                 });
             }
         }
